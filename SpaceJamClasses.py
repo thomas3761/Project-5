@@ -149,11 +149,11 @@ class Spaceship(SphereCollideObject):# / player
             aim.normalize()
             fireSolution = aim * travRate
             inFront =aim * 150
-            travVec = fireSolution + self, modelNode.getPos()
+            travVec = fireSolution + self.modelNode.getPos()
             self.missileBay -= 1
             tag = 'Missile' + str(Missile.missileCount)
             posVec = self.modelNode.getPos() + inFront
-            currentMissile = Missile(self.loader, './Assets/Phaser/Phaser.egg', self.render, tag, posVac, 4.0)
+            currentMissile = Missile(self.loader, './Assets/Phaser/Phaser.egg', self.render, tag, posVec, 4.0)
             Missile.Intervals[tag] = currentMissile.modelNode.posInterval(2.0, travVec, startPos = posVec, fuid = 1)
             Missile.Intervals[tag].staret()
 
@@ -167,8 +167,8 @@ class Spaceship(SphereCollideObject):# / player
         if task.time > self.reloadTime:
             self.missileBay += 1
         
-            if self.missileBay > 1
-            self.missileBay = 1
+            if self.missileBay > 1:
+                self.missileBay = 1
 
             print("Reload complete")
             return Task.done
@@ -201,7 +201,7 @@ class Spaceship(SphereCollideObject):# / player
         self.accept('d-up', self.RollRight, [0])
 
         #f to fire 
-        self.accept('f', self.fire)
+        self.accept('f', self.Fire)
 
     def checkIntervals(self, task):
         for i in Missile.Intervals:
@@ -260,6 +260,27 @@ class Missile(SphereCollideObject):
 
         print("Fire torpedo #" + str(Missile.missileCount))
 
-class DroneShowBase():
+class DroneShowBase(SphereCollideObject):
+    def DrawCloudDefense(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float,centralObject, droneName, position):
+        super(DroneShowBase, self).__init__(loader, modelPath, parentNode, nodeName, Vec3 (0,0,0), 1.2)
+
+
+        self.modelNode.setPos(posVec)
+        self.modelNode.setScale(scaleVec)
+        
+        tex = loader.loadTexture(texPath)
+        self.modelNode.setTexture(tex, 1)
+        
+        self.loader = loader
+        self.render = render
+
+        """"
+        placeholder = self.render.attachNewNode('placeholder')
+        placeholder.setPos(position)
+
+        drone_model = self.loader.loadModel("Assets/DroneDefender/DroneDefender.obj")
+        drone_model.reparentTo(placeholder)
+        drone_model.setScale(3)
+"""
     # # of Drone
     droneCount = 0

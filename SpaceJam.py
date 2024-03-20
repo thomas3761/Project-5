@@ -24,7 +24,6 @@ class SpaceJam(ShowBase):
 
         self.spaceStation = spaceJamClasses.SpaceStation(self.loader, self.render, "./Assets/SpaceStation1B/spaceStation.x", self.render, "SpaceStation", "./Assets/SpaceStation1B/SpaceStation1_Dif2.png", Vec3(1000, 5000, 80), Vec3(10, 10, 50), 5)
 
-
         self.cTrav = CollisionTraverser()
         self.pusher = CollisionHandlerPusher()
         self.cTrav.traverse(self.render)
@@ -97,18 +96,9 @@ class SpaceJam(ShowBase):
     def DrawBaseballSeams(self, centralObject, step, numSeams, radius=1): 
         for i in range(numSeams):
             position = defensePaths.BaseballSeams(step, numSeams, B=0.4) * radius
-            self.DrawCloudDefense(centralObject, f"Drone_{i}", position)
+            self.droneshowbase.DrawCloudDefense(self.loader, self.render, "./Assets/DroneDefender/DroneDefender.obj", self.render, "DroneObject", "./Assets/DroneDefender/drone_texture.png", Vec3(0, 0, 0), 1.0, centralObject, f"Drone_{i}", position)
 
-    def DrawCloudDefense(self, centralObject, droneName, position):
-       # Assuming this method places drones similar to the previous implementation
-        placeholder = self.render.attachNewNode('placeholder')
-        placeholder.setPos(position)
-
-        drone_model = self.loader.loadModel("Assets/DroneDefender/DroneDefender.obj")
-        drone_model.reparentTo(placeholder)
-        drone_model.setScale(3)
             
-
     def SetCamera(self):
         self.disableMouse()
         self.camera.reparentTo(self.Spaceship.modelNode)
