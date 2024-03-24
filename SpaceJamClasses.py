@@ -261,8 +261,8 @@ class Missile(SphereCollideObject):
         print("Fire torpedo #" + str(Missile.missileCount))
 
 class DroneShowBase(SphereCollideObject):
-    def DrawCloudDefense(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float,centralObject, droneName, position):
-        super(DroneShowBase, self).__init__(loader, modelPath, parentNode, nodeName, Vec3 (0,0,0), 1.2)
+    def __init__(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
+        super(DroneShowBase, self).__init__(loader, modelPath, parentNode, nodeName, posVec, scaleVec)  # Ensure the correct number of arguments
 
 
         self.modelNode.setPos(posVec)
