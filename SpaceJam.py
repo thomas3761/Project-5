@@ -44,8 +44,6 @@ class SpaceJam(ShowBase):
         self.DrawCircleXZDefense()
         self.DrawCircleYZDefense()
 
-        
-
         #self.SetCamera()
 
     def DrawCircleXYDefense(self):
@@ -96,7 +94,7 @@ class SpaceJam(ShowBase):
     def DrawBaseballSeams(self, centralObject, step, numSeams, radius=1): 
         for i in range(numSeams):
             position = defensePaths.BaseballSeams(step, numSeams, B=0.4) * radius
-            self.DroneShowBase = spaceJamClasses.DroneShowBase(self.loader, self.render, "./Assets/DroneDefender/DroneDefender.obj", self.render, "DroneObject", "./Assets/DroneDefender/drone_texture.png", Vec3(0, 0, 0), 1.0)
+            self.DroneShowBase = spaceJamClasses.DroneShowBase(self.loader, self.render, "./Assets/DroneDefender/DroneDefender.obj", self.render, "DroneObject", "./Assets/DroneDefender/octotoad1_auv.png", Vec3(0, 0, 10), 1.0)
 
             
     def SetCamera(self):

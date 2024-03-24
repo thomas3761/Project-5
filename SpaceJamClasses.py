@@ -54,6 +54,9 @@ class Spaceship(SphereCollideObject):# / player
         self.modelNode.setTexture(tex, 1)
         #self.modelNode.setP(100)
 
+        self.missileBay = 10
+        self.missileDistance = 100
+
         self.setKeyBindings()
         
     def Thrust(self, keyDown):
@@ -143,22 +146,23 @@ class Spaceship(SphereCollideObject):# / player
 
     
     def Fire(self):
-        if self.missileBay:
+        if self.missileBay > 0:
             travRate = self.missileDistance
             aim = self.render.getRelativePoint(self.modelNode, Vec3.forward())
             aim.normalize()
             fireSolution = aim * travRate
-            inFront =aim * 150
+            inFront = aim * 150
             travVec = fireSolution + self.modelNode.getPos()
             self.missileBay -= 1
             tag = 'Missile' + str(Missile.missileCount)
             posVec = self.modelNode.getPos() + inFront
             currentMissile = Missile(self.loader, './Assets/Phaser/Phaser.egg', self.render, tag, posVec, 4.0)
-            Missile.Intervals[tag] = currentMissile.modelNode.posInterval(2.0, travVec, startPos = posVec, fuid = 1)
-            Missile.Intervals[tag].staret()
+            Missile.Intervals[tag] = currentMissile.modelNode.posInterval(2.0, travVec, startPos=posVec, fluid=1) 
+            Missile.Intervals[tag].start()
+
 
         else:
-            if not self.taskManager.hasTaskNamd('reloaad'):
+            if not self.taskManager.hasTaskNamed('reload'):
                 print('Initializing reload...')
                 self.taskManager.doMethodLater(0,self.Reload, 'reload')
                 return Task.cont
@@ -213,16 +217,15 @@ class Spaceship(SphereCollideObject):# / player
             del Missile.cNodes[i]
             del Missile.collisionSolids[i]
 
-            print(1 + 'has reached the end of it fire solution.')
+            print(i + 'has reached the end of it fire solution.')
             break
             return Task.cont
         
     def EnableHud(self):
-        self.Hud = OnscreenImage(image = "./Assets/Hud/Reticle3b.png", pos = Vec3 (0,0,0), scale = 0.1)
-        self.hud.setTransparency(TransparencyAttrib.MAlpha)
-        self.EnableHUd()
-
-      
+        self.Hud = OnscreenImage(image="./Assets/Hud/Reticle3b.png", pos=Vec3(0, 0, 0), scale=0.1)
+        self.Hud.setTransparency(TransparencyAttrib.MAlpha)
+        self.EnableHud() 
+     
 class SpaceStation(CollisionCapsuleObject):
     def __init__(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, radius: float):
         super(SpaceStation, self).__init__(loader, modelPath, parentNode, nodeName,1, -1, 5, 1, -1, -5, 0)
@@ -245,8 +248,8 @@ class Missile(SphereCollideObject):
     missileCount = 0
 
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, posVec: Vec3, scaleVec: float = 1):
-        super(Missile, self).__init__(Loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 3.0)
-        
+        super(Missile, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 3.0)
+  
         self.modelNode.setScale(scaleVec)
         self.modelNode.setPos(posVec)
         self.modelNode.setName(nodeName)
@@ -262,8 +265,7 @@ class Missile(SphereCollideObject):
 
 class DroneShowBase(SphereCollideObject):
     def __init__(self, loader: Loader, render: NodePath, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(DroneShowBase, self).__init__(loader, modelPath, parentNode, nodeName, posVec, scaleVec)  # Ensure the correct number of arguments
-
+        super(DroneShowBase, self).__init__(loader, modelPath, parentNode, nodeName, posVec, scaleVec)  
 
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
@@ -274,13 +276,5 @@ class DroneShowBase(SphereCollideObject):
         self.loader = loader
         self.render = render
 
-        """"
-        placeholder = self.render.attachNewNode('placeholder')
-        placeholder.setPos(position)
-
-        drone_model = self.loader.loadModel("Assets/DroneDefender/DroneDefender.obj")
-        drone_model.reparentTo(placeholder)
-        drone_model.setScale(3)
-"""
     # # of Drone
     droneCount = 0
