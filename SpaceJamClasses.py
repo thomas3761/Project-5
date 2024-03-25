@@ -144,7 +144,6 @@ class Spaceship(SphereCollideObject):# / player
         self.modelNode.setR(self.modelNode.getR() + rate) 
         return Task.cont
 
-    
     def Fire(self):
         if self.missileBay > 0:
             travRate = self.missileDistance
@@ -159,7 +158,6 @@ class Spaceship(SphereCollideObject):# / player
             currentMissile = Missile(self.loader, './Assets/Phaser/Phaser.egg', self.render, tag, posVec, 4.0)
             Missile.Intervals[tag] = currentMissile.modelNode.posInterval(2.0, travVec, startPos=posVec, fluid=1) 
             Missile.Intervals[tag].start()
-
 
         else:
             if not self.taskManager.hasTaskNamed('reload'):
@@ -222,6 +220,7 @@ class Spaceship(SphereCollideObject):# / player
             return Task.cont
         
     def EnableHud(self):
+        print("EnableHud method called")  # Add this line
         self.Hud = OnscreenImage(image="./Assets/Hud/Reticle3b.png", pos=Vec3(0, 0, 0), scale=0.1)
         self.Hud.setTransparency(TransparencyAttrib.MAlpha)
         self.EnableHud() 
