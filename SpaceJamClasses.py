@@ -155,7 +155,7 @@ class Spaceship(SphereCollideObject):# / player
             self.missileBay -= 1
             tag = 'Missile' + str(Missile.missileCount)
             posVec = self.modelNode.getPos() + inFront
-            currentMissile = Missile(self.loader, './Assets/Phaser/Phaser.egg', self.render, tag, posVec, 4.0)
+            currentMissile = Missile(self.loader, './Assets/Phaser/phaser.egg', self.render, tag, posVec, 4.0)
             Missile.Intervals[tag] = currentMissile.modelNode.posInterval(2.0, travVec, startPos=posVec, fluid=1) 
             Missile.Intervals[tag].start()
 
@@ -257,7 +257,7 @@ class Missile(SphereCollideObject):
 
         Missile.fireModels[nodeName] = self.modelNode
         Missile.cNodes[nodeName]=self.collisionNode
-        Missile.collisionSolids[nodeName] = self.collisionNode.node().getsolid(0)
+        Missile.collisionSolids[nodeName] = self.collisionNode.node().getSolid(0)
         Missile.cNodes[nodeName].show()
 
         print("Fire torpedo #" + str(Missile.missileCount))
